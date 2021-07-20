@@ -60,11 +60,11 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(data, ) {
-    /* code here */
+function getWinners(data, getFinalscb) {
+    return getFinalscb(data).map(item => item['Home Team Goals'] > item['Away Team Goals'] ? item['Home Team Name'] : item['Away Team Name']);
 }
 
-
+console.log(`task 4`, getWinners(fifaData, getFinals))
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Use the higher-order function getWinnersByYear to do the following:
@@ -76,11 +76,13 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(data, getYearscb, getWinnerscb) {
+    const winners = getWinnerscb(data, getFinals);
+    const years = getYearscb(data, getFinals);
+    return winners.map((item, index)=> `In ${years[index]}, ${item} won the world cup!`)
 }
 
-
+console.log(`task 5`, getWinnersByYear(fifaData, getYears, getWinners))
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Use the higher order function getAverageGoals to do the following: 
@@ -92,11 +94,12 @@ Use the higher order function getAverageGoals to do the following:
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
 
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinalscb) {
+   const averageTeamGoals = getFinalscb.reduce((acc, item)=> acc + item[`Home Team Goals`] + item[`Away Team Goals`], 0);
+   return (averageTeamGoals / getFinalscb.length).toFixed(2);
 }
 
-
+console.log(`task 6`, getAverageGoals(getFinals(fifaData)))
 
 
 /// 🥅 STRETCH 🥅 ///
